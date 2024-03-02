@@ -10,7 +10,7 @@ class FetchClass{
 Future<List<PostModel>> fetchPosts()async{
 try {
 final response = await get(Uri.parse(URL));
-  List<PostModel> jsonData = jsonDecode(response.body);
+  List<dynamic> jsonData = jsonDecode(response.body);
   return jsonData.map((dynamic item) => PostModel.fromjson(item)).toList();
 }catch(err){throw err;}
   }
