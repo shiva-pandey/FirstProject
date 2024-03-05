@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class bottomSheet extends StatefulWidget {
-  const bottomSheet({super.key});
+class game extends StatefulWidget {
+  const game({super.key});
 
   @override
-  State<bottomSheet> createState() => _bottomSheetState();
+  State<game> createState() => _gameState();
 }
 
-class _bottomSheetState extends State<bottomSheet> {
+class _gameState extends State<game> {
   static double Yaxis = 0;
   double time = 0;
   double height = 0;
@@ -62,7 +62,7 @@ class _bottomSheetState extends State<bottomSheet> {
               color: Colors.blue,
               duration: Duration(milliseconds: 20),
               child: Icon(
-                Icons.abc,
+                Icons.amp_stories,
                 size: 60,
                 color: Colors.red,
               ),

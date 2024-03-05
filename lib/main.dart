@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym/block_api/blocapi.dart';
+import 'package:gym/block_api/fetch_post.dart';
 import 'package:gym/friday.dart';
 import 'package:gym/saturday.dart';
- // import 'package:gym/splesh.dart';
+  import 'package:gym/splesh.dart';
 import 'package:gym/sunday.dart';
 import 'package:gym/thursday.dart';
 import 'package:gym/tuesday.dart';
 import 'package:gym/wednesday.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
  // import 'block/bloc.dart';
-import 'block/bloc.dart';
+
+import 'block/bloc2.dart';
+import 'block/bloc3.dart';
 import 'block/getAapi.dart';
 import 'demo_page/hidden_drawer.dart';
 import 'demo_page/indexed_stack.dart';
 import 'block_api/main_page.dart';
 import 'bmi.dart';
 import 'calculator.dart';
-import 'demo_page/model_bottem_sheet.dart';
 import 'email.dart';
 import 'monday.dart';
-import 'shared_prefs/workout.dart';
+import 'shared_prefs/welcome.dart';
 
 
 void main() {
@@ -40,7 +43,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: PostPage(),
+      home: BlocProvider(
+        create: (context) => PostCubit(FetchClass()), // take Fetchclass in bloc
+        child: PostPage()),
     );
   }
 }
@@ -59,21 +64,28 @@ drawer: Container(
           child: DrawerHeader(
           child: Center(child: Text("GYM TRAINER",style: TextStyle(fontSize: 50,color: Colors.white.withOpacity(.5)),)),),
       ),
-      Container(
-        height: 70 ,
-        width: 40,
-        child: Card(color: Colors.amber.withOpacity(0.1),
-          shadowColor: Color.fromARGB(255, 1, 172, 252),
-          elevation: 50,
-          child: Row(children: [SizedBox(width: 5,),
-          Icon(Icons.ad_units),SizedBox(width: 20,),
-          Text("Exercises",style: TextStyle(fontSize: 40,color: Colors.black,fontWeight: FontWeight.bold),),
-          ],),),
+      InkWell(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: ((context) => BlocProvider(
+            create: (context) => SignInBloc(),
+            child: bloc2()))));
+        },
+        child: Container(
+          height: 70 ,
+          width: 40,
+          child: Card(color: Colors.amber.withOpacity(0.1),
+            shadowColor: Color.fromARGB(255, 1, 172, 252),
+            elevation: 50,
+            child: Row(children: [SizedBox(width: 5,),
+            Icon(Icons.ad_units),SizedBox(width: 20,),
+            Text("BLOC",style: TextStyle(fontSize: 40,color: Colors.black,fontWeight: FontWeight.bold),),
+            ],),),
+        ),
       ),SizedBox(width: 20,),
       InkWell(
          onTap: (){
           Navigator.push(context,
-           MaterialPageRoute(builder: (context){return workout();}));
+           MaterialPageRoute(builder: (context){return HiddenDrawer();}));
         },
         child: Container(
           height: 70 ,
@@ -82,7 +94,7 @@ drawer: Container(
             elevation: 50,
             child: Row(children: [SizedBox(width: 5,),
             Icon(Icons.build),SizedBox(width: 20,),
-            Text("Workout",style: TextStyle(fontSize: 40,color: Colors.black,fontWeight: FontWeight.bold),),
+            Text("GAME",style: TextStyle(fontSize: 40,color: Colors.black,fontWeight: FontWeight.bold),),
             ],),),
         ),
       ),SizedBox(width: 20,),
@@ -182,8 +194,15 @@ drawer: Container(
    ],
   ),
 ),
-         appBar: AppBar(leading: Builder(builder: (context){return IconButton(onPressed: (){Scaffold.of(context).openDrawer();}, icon: Icon(Icons.home,color: Colors.red,size: 30,));}),
+
+
+         appBar: AppBar(  leading: Builder(builder: (context){return IconButton(onPressed: (){Scaffold.of(context).openDrawer();}, icon: Icon(Icons.home,color: Colors.red,size: 30,));}),
  title: Text("      APPBAR",style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold,color: Colors.blue),),
+ actions: [TextButton(onPressed: ()async{
+      var prefs = await SharedPreferences.getInstance();
+      prefs.setBool(workoutState.SKIPKEY,false);
+      Navigator.push(context, MaterialPageRoute(builder: ((context) => workout())));
+ }, child: Text("log out"))],
       backgroundColor: Colors.black,
      // leading: Icon(Icons.account_balance_wallet_sharp,color: Color.fromARGB(255, 22, 216, 4),size: 30,),
       ),

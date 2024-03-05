@@ -5,7 +5,7 @@ abstract class PostState{}
 class PostLoadingState extends PostState{}
 
 class PostLoadedState extends PostState{
-late  List<PostModel> posts;
+  List<PostModel> posts;               // it takes list of modelclass
    PostLoadedState(this.posts);
 }
 class PostErrorState extends PostState{

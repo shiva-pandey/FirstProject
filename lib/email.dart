@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gym/main.dart';
+import 'package:gym/shared_prefs/welcome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class email extends StatefulWidget {
   const email({super.key});
@@ -49,7 +52,11 @@ class _emailState extends State<email> {
              SizedBox(height: 40,),
  
   InkWell(
-    onTap: (){},
+    onTap: ()async{
+      var prefs = await SharedPreferences.getInstance();
+      prefs.setBool(workoutState.SKIPKEY,true);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage() ));
+    },
     child: Container(height: 40,width: 300,decoration: BoxDecoration(gradient:LinearGradient(
               colors: [Colors.red.withOpacity(1),Colors.blue.withOpacity(1),Colors.orange.withOpacity(1)]),
               borderRadius: BorderRadius.all(Radius.circular(30))

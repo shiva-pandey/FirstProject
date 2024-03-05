@@ -13,7 +13,6 @@ int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("indexed stack"),backgroundColor: Colors.blue,),
       body: Column(
         children: [
           Container(color: Colors.black,
@@ -35,18 +34,28 @@ int index = 0;
           IndexedStack(
             index: index,
             children: [
-              Text("0",style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),),
-              Text("1",style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),),
-              Text("2",style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),)
+              Container(color: Colors.amber,width: double.infinity,
+                child: Center(child: Text("0",style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),))),
+              Container(color: Colors.purple,width: double.infinity,
+                child: Center(child: Text("1",style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),))),
+              Container(color: Colors.red,width: double.infinity,
+                child: Center(child: Text("2",style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),)))
             
             ],
           ),  //  SizedBox(height:50),
 
            // FADE IN IMAGE 
-          FadeInImage.assetNetwork(
-            placeholder: "assets/images/sholder2.gif",
-            image: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=600",
-            height: 300,width: 400,                )
+          Stack(
+            children: [
+              Container(height: 650,width: 500,
+          decoration: BoxDecoration(gradient: SweepGradient(colors: [Colors.black,Colors.purple,Colors.orange])),),
+              FadeInImage.assetNetwork(
+                placeholder: "assets/images/sholder2.gif",
+                image: "https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=600",
+                height: 300,width: 500,                ),
+            ],
+          ),
+            
         ],
       ),
     );

@@ -2,16 +2,20 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gym/main.dart';
+import 'package:gym/shared_prefs/welcome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class splesh extends StatefulWidget {
   const splesh({super.key});
 
   @override
-  State<splesh> createState() => _spleshState();
+  State<splesh> createState() => spleshState();
 }
 
-class _spleshState extends State<splesh>with SingleTickerProviderStateMixin {
+class spleshState extends State<splesh>with SingleTickerProviderStateMixin {
+
+static const String SKIPKEY = "true" ;
 
 late Animation animation;
 late AnimationController animationController;
@@ -20,8 +24,15 @@ late Animation animation1;
 @override
   void initState() {
         super.initState();
-        Timer(Duration(seconds: 7), () {
- Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){return MyHomePage();}));
+        Timer(Duration(seconds: 7), () async{
+          var prefs =  await SharedPreferences.getInstance();
+       var login =    prefs.getBool(SKIPKEY);
+  if(login != null){
+       if(login == true){Navigator.push(context, MaterialPageRoute(builder: ((context) => MyHomePage())));}
+       else{Navigator.push(context, MaterialPageRoute(builder: (context)=> workout()));}
+  }else{Navigator.push(context, MaterialPageRoute(builder: (context)=> workout()));}
+
+
          });
 
   
